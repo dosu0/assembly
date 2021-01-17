@@ -2,17 +2,20 @@ NASM := nasm -felf
 # macOS
 # NASM := nasm -fmacho
 
-all : helloworld helloworld-len helloworld-inc helloworld-lf
+PROGRAMS = helloworld helloworld-len helloworld-inc helloworld-lf \
+ 	helloworld-args
 
-helloworld : helloworld.o
-	ld $^ -o $@
-helloworld-len : helloworld-len.o
-	ld $^ -o $@
-helloworld-inc : helloworld-inc.o
-	ld $^ -o $@
-helloworld-lf : helloworld-lf.o
-	ld $^ -o $@
+OBJECTS = $(addsuffix .o,$(PROGRAMS)) 
+
+all : $(PROGRAMS)
+
+% : %.o
+	$(LD) $(LDFLAGS) $^ -o $@
 
 %.o : %.asm
-	$(NASM) $<
-helloworld-inc.o helloworld-lf.o : funcs.asm
+	$(NASM) -M $^
+	$(NASM)	$^
+
+.PHONY: clean
+clean :
+	rm -rf $(OBJECTS) $(PROGRAMS)
