@@ -1,6 +1,7 @@
 NASM := nasm -felf
 NASMFLAGS := -Iinclude/
 VPATH = src:include
+.SUFFIXES: .asm .o
 # macOS
 # NASM := nasm -fmacho
 # LDFLAGS = -e _start -macos-min-version 10.7.0
@@ -13,13 +14,14 @@ OBJECTS = $(addsuffix .o,$(PROGRAMS))
 .PHONY: all
 all : $(PROGRAMS)
 
-% : src/%.o
-	$(LD) $(LDFLAGS) $^ -o $@ 
+% : src/%.o bin
+	ld $(LDFLAGS) $< -o bin/$@ 
 
 %.o : %.asm
-	$(NASM) -M $< > $<.dep
-	$(NASM) $(NASMFLAGS) $^
+	$(NASM) $(NASMFLAGS) -o $@ -MD $<.dep $<
 
+bin :
+	mkdir bin  
 .PHONY: clean
 clean :
 	rm -rf src/*.o $(PROGRAMS)
