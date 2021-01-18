@@ -4,13 +4,12 @@
 ; - iprintln:	Print an integer to stdout with a new line
 ; - print: 	Print a string to stdout
 ; - println: 	Print a string to stdout with a new line
-; - strlen: 	Find the length of a string
-; - exit:	Call sys_exit(0)
 
 %include 'syscalls.asm'
+%include 'string.asm'
+%include 'misc.asm' 		; for convenience
 
 ; Constants
-%define exit_sucess 0
 %define stdout 1
 
 ;--------------------------------------------------------
@@ -26,7 +25,7 @@ iprint:
 	
 	mov	ecx, 0 		; Counter of how many bytes are going to be printed
 
-divideloop:
+.divideloop:
 	inc	ecx
 
 	mov	edx, 0		; empty edx
@@ -35,17 +34,17 @@ divideloop:
 	add	edx, 48 	; Convert the remainder to an ascii character
 	push	edx
 	cmp	eax, 0		; Have we finished converting?
-	jnz	divideloop
+	jnz	.divideloop	; loop if not zero (nz)
 
-printloop:
+.printloop:
 	dec	ecx
 	mov	eax, esp
 	call	print
 	pop	eax
 	cmp	ecx, 0
-	jnz	printloop
-	
-	; Restore registers that were pushed onto the stack
+	jnz	.printloop
+
+.restore:
 	pop	esi
 	pop	edx
 	pop	ecx
@@ -77,27 +76,10 @@ iprintln:
 	push 	eax
 	mov	eax, esp
 	call	print
-	pop	eax
-	pop	eax
-	ret
-;-------------------------------------
-; int strlen(string str)
-; Calculates the length of a string
-; returns the length in register eax
-strlen:
-	push	ebx		; preserve ebx
-	mov	ebx, eax	; let eax & ebx point to the string
-	
-nextchar:
-	cmp 	byte [eax], 0 	; compare the byte pointed to by 'eax' against zero (end of string)
-	jz	finished	; exit this loop if was zero
-	inc	eax		; increment the pointer
-	jmp	nextchar	; repeat
 
-finished:
-	sub	eax, ebx	; subtract ending pointer from the starting pointer
-				; eax now contains the length of the string
-	pop	ebx		; restore ebx
+.restore:
+	pop	eax
+	pop	eax
 	ret
 
 ;----------------------------
@@ -120,12 +102,13 @@ print:
 
 	mov	eax, sys_write
 	int	80h
-	
-	; Restore other registers
+
+.restore:
 	pop	ebx
 	pop	ecx
 	pop	edx
 	ret
+
 ;-----------------------------------------
 ; void println(string str)
 ; Write a message to stdout with a new line
@@ -139,14 +122,8 @@ println:
 	call	print		; print new line char
 
 	pop	eax		; remove new line char
+
+.restore:
 	pop	eax		; restore eax
 	ret
 
-;------------------
-; void exit()
-; Exit the program
-exit:
-	mov	ebx, exit_sucess
-	mov	eax, sys_exit
-	int	80h
-	ret

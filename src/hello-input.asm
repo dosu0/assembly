@@ -1,13 +1,10 @@
+;-------------------------------------------
 ; Hello World program that reads from stdin
-;
-;
-;
 
 %define sys_read 3
-
 %define stdin 0
 
-%include 'funcs.asm'
+%include 'io.asm'
 
 section .data
 msg1	db	'Please enter your name: ', 0
@@ -34,6 +31,7 @@ _start:
 	
 	mov	eax, input
 	call	print
-
+	
+	xor	eax, eax		; fancy way to set eax to 0	
 	call	exit
 

@@ -1,7 +1,7 @@
-;--------------------------------------------
-; Hello World program
-; Prints a string of **any** size to stdout
-;--------------------------------------------
+;----------------------------------------------
+; src/hello-len.asm
+; This program prints a string of **any** size 
+; to stdout
 
 %include 'syscalls.asm'
 
@@ -26,7 +26,7 @@ _start:
 	mov	eax, sys_write	; system call
 	int	80h
 	
-exit:
+.exit:
 	mov	ebx, exit_sucess
 	mov	eax, sys_exit
 	int	80h
@@ -39,13 +39,13 @@ strlen:
 	push	ebx		; preserve ebx
 	mov	ebx, eax	; let eax & ebx point to the string
 	
-nextchar:
+.nextchar:
 	cmp 	byte [eax], 0 	; compare the byte pointed to by 'eax' against zero (end of string)
-	jz	finished	; exit this loop if was zero
+	jz	.finish		; exit this loop if was zero
 	inc	eax		; increment the pointer
-	jmp	nextchar	; repeat
+	jmp	.nextchar	; repeat
 
-finished:
+.finish:
 	sub	eax, ebx	; subtract ending pointer from the starting pointer
 				; eax now contains the length of the string
 	pop	ebx		; restore ebx

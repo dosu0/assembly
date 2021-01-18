@@ -1,6 +1,7 @@
+;----------------------------------
 ; Hello World program
 
-%include 'funcs.asm'
+%include 'io.asm'
 
 ;-------------------------------------------------
 ; Variables
@@ -20,5 +21,6 @@ _start:
 	
 	mov 	eax, msg2
 	call	print
-
+	
+	mov	eax, exit_success
 	call 	exit

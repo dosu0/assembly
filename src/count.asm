@@ -1,6 +1,6 @@
 ; Counting program; counts to 10
 
-%include 'funcs.asm'
+%include 'io.asm'
 
 section	 .text
 global	 _start
@@ -8,11 +8,12 @@ global	 _start
 _start:
 	mov 	ecx, 0
 
-nextnum:
+.nextnum:
 	inc 	ecx
 	mov 	eax, ecx
 	call 	iprintln
 	cmp	ecx, 10
-	jne	nextnum
+	jne	.nextnum
 
+	mov	eax, exit_success
 	call 	exit
