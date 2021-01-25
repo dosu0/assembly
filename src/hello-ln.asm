@@ -17,11 +17,11 @@ section .text
 global _start
 
 _start:
-	mov	eax, msg1
+	mov		eax, msg1
 	call	println
 	
 	mov 	eax, msg2
 	call	println
 	
-	mov	eax, exit_success 
+	mov		eax, exit_success 
 	call 	exit

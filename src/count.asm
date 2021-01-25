@@ -12,8 +12,8 @@ _start:
 	inc 	ecx
 	mov 	eax, ecx
 	call 	iprintln
-	cmp	ecx, 10
-	jne	.nextnum
+	cmp		ecx, 10
+	jne		.nextnum
 
-	mov	eax, exit_success
+	mov		eax, exit_success
 	call 	exit

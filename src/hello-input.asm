@@ -17,21 +17,21 @@ section .text
 global	_start
 
 _start:
-	mov	eax, msg1
+	mov		eax, msg1
 	call	print
 
-	mov	edx, 255
-	mov	ecx, input
-	mov	ebx, stdin
-	mov	eax, sys_read
-	int	80h
+	mov		edx, 255
+	mov		ecx, input
+	mov		ebx, stdin
+	mov		eax, sys_read
+	int		80h
 	
-	mov	eax, msg2
+	mov		eax, msg2
 	call	print
 	
-	mov	eax, input
+	mov		eax, input
 	call	print
 	
-	xor	eax, eax		; fancy way to set eax to 0	
+	xor		eax, eax		; fancy way to set eax to 0	
 	call	exit
 

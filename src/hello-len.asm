@@ -16,20 +16,20 @@ section .text
 global _start
 
 _start:
-	mov	eax, msg
+	mov		eax, msg
 	call	strlen
 
-	mov	edx, eax	; msg length arg
+	mov		edx, eax	; msg length arg
 	mov 	ecx, msg	; msg pointer arg
-	mov	ebx, stdout 	; file pointer arg
+	mov		ebx, stdout 	; file pointer arg
 
-	mov	eax, sys_write	; system call
-	int	80h
+	mov		eax, sys_write	; system call
+	int		80h
 	
 .exit:
-	mov	ebx, exit_sucess
-	mov	eax, sys_exit
-	int	80h
+	mov		ebx, exit_sucess
+	mov		eax, sys_exit
+	int		80h
 
 ;------------------------------------
 ; int strlen(string str)
@@ -37,18 +37,18 @@ _start:
 ; returns the length in register eax
 strlen:
 	push	ebx		; preserve ebx
-	mov	ebx, eax	; let eax & ebx point to the string
+	mov		ebx, eax	; let eax & ebx point to the string
 	
 .nextchar:
 	cmp 	byte [eax], 0 	; compare the byte pointed to by 'eax' against zero (end of string)
-	jz	.finish		; exit this loop if was zero
-	inc	eax		; increment the pointer
-	jmp	.nextchar	; repeat
+	jz		.finish		; exit this loop if was zero
+	inc		eax		; increment the pointer
+	jmp		.nextchar	; repeat
 
 .finish:
-	sub	eax, ebx	; subtract ending pointer from the starting pointer
-				; eax now contains the length of the string
-	pop	ebx		; restore ebx
+	sub		eax, ebx	; subtract ending pointer from the starting pointer
+						; eax now contains the length of the string
+	pop		ebx			; restore ebx
 	ret
 
 
