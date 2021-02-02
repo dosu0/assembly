@@ -1,4 +1,5 @@
-; Counting program; counts to 10
+;--------------------------
+; Counts to 10
 
 %include 'io.asm'
 

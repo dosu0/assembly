@@ -1,4 +1,7 @@
-; Hello World program
+;-----------------------------------------
+; src/hello-args.asm
+; Prints each command line argument on
+; a new line
 
 %include 'io.asm'
 

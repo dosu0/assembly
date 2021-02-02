@@ -10,7 +10,7 @@
 %define stdout 1
 
 section .data
-msg	db	'Hello, World!', 10 ; '10' is the new line character
+msg		db	"Hello, World!", 10 ; '10' is the new line character
 
 section .text
 global _start
@@ -36,19 +36,19 @@ _start:
 ; Calculates the length of a string
 ; returns the length in register eax
 strlen:
-	push	ebx		; preserve ebx
-	mov		ebx, eax	; let eax & ebx point to the string
+	push	ebx				; preserve ebx
+	mov		ebx, eax		; let eax & ebx point to the string
 	
 .nextchar:
 	cmp 	byte [eax], 0 	; compare the byte pointed to by 'eax' against zero (end of string)
-	jz		.finish		; exit this loop if was zero
-	inc		eax		; increment the pointer
-	jmp		.nextchar	; repeat
+	jz		.finish			; exit this loop if was zero
+	inc		eax				; increment the pointer
+	jmp		.nextchar		; repeat
 
 .finish:
-	sub		eax, ebx	; subtract ending pointer from the starting pointer
-						; eax now contains the length of the string
-	pop		ebx			; restore ebx
+	sub		eax, ebx		; subtract ending pointer from the starting pointer
+							; eax now contains the length of the string
+	pop		ebx				; restore ebx
 	ret
 
 

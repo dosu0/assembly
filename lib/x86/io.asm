@@ -18,53 +18,37 @@
 iprint:
 	; Preserve registers
 	push	eax
-;	push	ebx
 	push	ecx
 	push	edx
 	push 	esi
 	
-	mov	ecx, 0 		; Counter of how many bytes are going to be printed
+	mov		ecx, 0 		; Counter of how many bytes are going to be printed
 
 .divideloop:
-	inc	ecx
+	inc		ecx
 
-	mov	edx, 0		; empty edx
-	mov	esi, 10
-	idiv	esi		; eax / esi
-	add	edx, 48 	; Convert the remainder to an ascii character
+	mov		edx, 0		; empty edx
+	mov		esi, 10
+	idiv	esi			; eax / esi
+	add		edx, 48 	; Convert the remainder to an ascii character
 	push	edx
-	cmp	eax, 0		; Have we finished converting?
-	jnz	.divideloop	; loop if not zero (nz)
+	cmp		eax, 0		; Have we finished converting?
+	jnz		.divideloop	; loop if not zero (nz)
 
 .printloop:
-	dec	ecx
-	mov	eax, esp
+	dec		ecx
+	mov		eax, esp
 	call	print
-	pop	eax
-	cmp	ecx, 0
-	jnz	.printloop
+	pop		eax
+	cmp		ecx, 0
+	jnz		.printloop
 
 .restore:
-	pop	esi
-	pop	edx
-	pop	ecx
-	pop	eax
+	pop		esi
+	pop		edx
+	pop		ecx
+	pop		eax
 	ret
-;	mov 	edx, ecx 	; message length
-;
-;	mov	ecx, esp
-;	sub	ecx, edx	; message pointer
-;
-;	mov	ebx, stdout
-;	mov 	eax, sys_write
-;	int	80h
-;
-;	pop	esi
-;	pop	edx
-;	pop	ecx
-;	pop	ebx
-;	pop	eax
-;	ret
 
 ;------------------------------------------
 ; void iprintln(int num)
@@ -72,14 +56,14 @@ iprint:
 iprintln:
 	call 	iprint
 	push	eax
-	mov	eax, 10
+	mov		eax, 10
 	push 	eax
-	mov	eax, esp
+	mov		eax, esp
 	call	print
 
 .restore:
-	pop	eax
-	pop	eax
+	pop		eax
+	pop		eax
 	ret
 
 ;----------------------------
@@ -94,19 +78,19 @@ print:
 
 	call	strlen
 
-	mov	edx, eax 	; message length arg
-	pop	eax		; restore eax ( the msg pointer arg )	
+	mov		edx, eax 	; message length arg
+	pop		eax			; restore eax ( the msg pointer arg )	
 
 	mov 	ecx, eax	; message pointer arg
-	mov	ebx, stdout 	; file pointer arg
+	mov		ebx, stdout ; file pointer arg
 
-	mov	eax, sys_write
-	int	80h
+	mov		eax, sys_write
+	int		80h
 
 .restore:
-	pop	ebx
-	pop	ecx
-	pop	edx
+	pop		ebx
+	pop		ecx
+	pop		edx
 	ret
 
 ;-----------------------------------------
@@ -116,14 +100,13 @@ println:
 	call	print
 	
 	push	eax
-	mov	eax, 10 	; new line char
+	mov		eax, 10 	; new line char
 	push	eax
-	mov	eax, esp	; eax now points to the new line char
+	mov		eax, esp	; eax now points to the new line char
 	call	print		; print new line char
 
-	pop	eax		; remove new line char
+	pop		eax			; remove new line char
 
 .restore:
-	pop	eax		; restore eax
+	pop		eax			; restore eax
 	ret
-

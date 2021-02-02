@@ -1,5 +1,6 @@
-;----------------------------------
-; Hello World program
+;-----------------------------------------------------
+; Hello World program via subroutines in an included
+; file.
 
 %include 'io.asm'
 

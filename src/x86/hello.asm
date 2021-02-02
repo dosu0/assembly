@@ -16,11 +16,10 @@ section .text
 global _start
 
 _start:
-	
 	mov		edx, 13
 	mov 	ecx, msg
-	mov		ebx, stdout 
-	mov		eax, sys_write 
+	mov		ebx, stdout
+	mov		eax, sys_write
 	int		80h
 		
 	mov		ebx, exit_sucess

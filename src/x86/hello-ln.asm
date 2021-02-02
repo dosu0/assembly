@@ -1,7 +1,7 @@
 ;------------------------------------------
 ; src/hello-inc.asm
 ; This program prints messages to stdout
-; via external subroutines
+; via
 
 %include 'io.asm'
 
