@@ -32,6 +32,8 @@ endif
 PROGRAMS = args input count
 OBJECTS = $(addsuffix .o,$(PROGRAMS)) 
 
+NASMFLAGS += -g
+
 .PHONY: all
 all : $(PROGRAMS)
 

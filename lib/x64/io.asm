@@ -36,10 +36,13 @@ iprint:
 .printloop:
 	dec		rcx
 
+	; print(&num)
 	mov		rdi, rsp
+	push	rcx			; rcx gets overriden for some reason..
 	call	print
-
+	pop 	rcx
 	pop		rdi
+
 	cmp		rcx, 0
 	jnz		.printloop
 	ret

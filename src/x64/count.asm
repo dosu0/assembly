@@ -5,14 +5,13 @@
 
 %include 'io.asm'
 
-section .data
-msg     db      "Hello, world!."
 section .text
 global _start
 
 _start:
-    mov     rdi, 100
-    call    iprintln 
+    mov     rdi, 1
+    call    iprintln
+
 
 .finish:
     xor     rdi, rdi
