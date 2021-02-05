@@ -1,5 +1,6 @@
 ;-------------------------------------------
-; Hello World program that reads from stdin
+; src/x86/input.asm
+; Echoes back your name.
 
 %define sys_read 3
 %define stdin 0

@@ -16,7 +16,7 @@ assembled using [nasm](https://nasm.us).
 
 ### Directory Structure
 - `bin/`: Where the assembled and linked programs will be emitted.
-- `lib/`: Utitily functions
+- `lib/`: Utility functions
   - `x64/`: In Linux 64bit calling convention
   - `x86/`: In Linux 32bit calling convention
 - `src/`: The actual source files for the programs
@@ -37,13 +37,15 @@ assembled using [nasm](https://nasm.us).
    2. On Linux install gcc
       1. Debian based systems: `sudo apt-get install gcc`
 
-4. Finally, to assemble and link the programs, run `make`
+4. Finally, to assemble and link the programs, run `./build.sh`
+   which just invokes the Makefile  
 
 Now in the `bin` directory, you should see various programs (depending on your 
 machine's architecture).
 
 ## Resources
 The resources and tutorials I used to learn assembly.
+Theres so much
 
 [Nasm Documentation](https://www.nasm.us/xdoc/2.15.05/html/nasmdoc0.html)
 
@@ -55,3 +57,4 @@ The resources and tutorials I used to learn assembly.
 - https://cs.lmu.edu/~ray/notes/nasmtutorial/
 - https://www.cs.uaf.edu/2017/fall/cs301/reference/x86_64.html
 - https://www.cs.tufts.edu/comp/40/docs/x64_cheatsheet.pdf
+- https://www.cs.tufts.edu/comp/40/docs/asm64-handout.pdf

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+if [ ! -d 'bin' ]; then
+    mkdir bin
+fi
 
 # idk. maybe i should have a build script?
 if [ $(command -v tput) ]; then
@@ -15,11 +18,11 @@ GOOD=${GREEN}${BOLD}
 WARN="${YELLOW}${BOLD}[WARNING]"
 case `uname -s` in
     Linux)
-        INSTALL = sudo apt-get install
+        INSTALL='sudo apt-get install'
         break
         ;;
     Darwin) 
-        INSTALL = brew install
+        INSTALL='brew install'
         break
         ;;
     * ) echo $FATAL unkwown system; exit;;

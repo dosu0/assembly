@@ -1,3 +1,6 @@
 *.dep
 *.o
 bin/
+
+.vscode/
+tests/

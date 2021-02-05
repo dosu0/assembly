@@ -1,6 +1,9 @@
 OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 
+LD=ld
+.SUFFIXES: .asm .o
+
 ifeq ($(ARCH), x86_64)
     VPATH = lib/x64:src/x64
     NASMFLAGS = -Ilib/x64
@@ -25,31 +28,19 @@ else
 	endif
 endif
 
-.SUFFIXES: .asm .o
 
-#PROGAMS = len inc ln args input
-#PROGRAMS := $(addprefix hello-, $(PROGRAMS))
-#PROGRAMS += hello count
-
-PROGRAMS = prime
-
+PROGRAMS = args input count
 OBJECTS = $(addsuffix .o,$(PROGRAMS)) 
 
 .PHONY: all
 all : $(PROGRAMS)
 
-% : $(SRC)/%.o bin
-	ld $(LDFLAGS) $< -o bin/$@
+% : $(SRC)/%.o
+	$(LD) $(LDFLAGS) $< -o bin/$@
 
 %.o : %.asm
-	$(NASM) -M -MF $(SRC)/.deps/$(notdir $<).dep $< 
+	$(NASM) $(NASMFLAGS) -o $@ -MD $<.dep $<
 
-%.o : %.asm
-	$(NASM) $(NASMFLAGS) -o $@ $<
-
-bin :
-	mkdir bin 
- 
 .PHONY: clean
 clean :
 	rm -rf src/*.o $(PROGRAMS)

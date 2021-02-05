@@ -1,5 +1,5 @@
 ;-----------------------------------------
-; src/hello-args.asm
+; src/x64/rgs.asm
 ; Prints each command line argument on
 ; a new line
 
@@ -9,17 +9,20 @@ section .text
 global _start
 
 _start:
-	pop 	ecx			; The first value on the stack is the amount of arguments
+	pop 	rcx			; The first value on the stack is the amount of arguments
 						; passed in to the executable
+	mov 	rdi, rcx
+	call 	iprintln
 .nextarg:
-	cmp		ecx, 0		; If there are no arguments remaining exit
+	cmp		rcx, 0		; If there are no arguments remaining exit
 	jz		.finish
 
-	pop		eax			; Get the next argument
+	pop		rdi			; Get the next argument
 	call	println		; and print it
 
-	dec		ecx			; one less argument
+	dec		rcx			; one less argument
 	jmp 	.nextarg	; repeat
 
 .finish:
+    xor     rdi, rdi
 	call 	exit

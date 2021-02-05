@@ -15,7 +15,7 @@ global 	_start
 _start:
 	; mov     rcx, 0          ; candidate
 	; mov     rbx, 0          ; prime numbers found
-	; mov		rdx, 0			; answer
+	; mov	 rdx, 0			; answer
 
 	mov		rdi, 0
 	call	exit
