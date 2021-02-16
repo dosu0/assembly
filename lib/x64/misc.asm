@@ -1,15 +1,16 @@
-;------------------------------------------
+;---------------------------------------------------
+; lib/x64/misc.asm
 ; Miscallaneous subroutines
-; exit : Exit the program with sys_exit
+; exit(i64 code)	Exit the program with sys_exit
 
 %include 'syscalls.asm'
 
-%define exit_success	0
-%define exit_error		1
-%define	exit_terminated	130
+exit_success	equ 0
+exit_error		equ 1
+exit_terminated	equ 130
 
 ;------------------------------
-; void exit(int code)
+; void exit(i32 code)
 ; Exit the program
 exit:
 	mov		rax, sys_exit

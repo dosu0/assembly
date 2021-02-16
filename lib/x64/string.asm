@@ -1,58 +1,82 @@
 ;----------------------------------------------------------
+; lib/x64/string.asm
 ; String utility functions.
-; - strlen: Find the length of a string.
-; - atoi:	Convert an ascii string to an integer.	
+; strlen(char* str)	Find the length of a string.
+; atoi(char* str)		Convert an ascii string to an integer.	
 
 ;---------------------------------------
-; int atoi(string str)
+; int atoi(char* str)
 ; Convert an ascii string to an integer.
-; atoi:
-; 	mov		rsi, rdi		; move the string into the 'source register'	
-; 	mov		rdi, 0
-; 	mov		rdx, 0			; the offset of the current char
+atoi:
+	push 	rcx
+	push 	rdx
+	xor		ecx, ecx
+	xor 	eax, eax 	; sum
 
-; .convertloop:
-; 	xor		rsi, rsi
-; 	mov		bl, [rsi+rdx]	; move the current char into the bl (8bit) register
-; 	cmp		bl, 48			; compare against '0'
-; 	jl		.finish			; not a string
-; 	cmp		bl, 57			; compare against '9'
-; 	jg		.finish			; not a string
+.loop:
+	xor 	edx, edx
+	mov 	dl, [rdi+rcx]
+	
+	cmp 	dl, 48 		; ascii 0
+	jl 		.shift_back
+	cmp 	dl, 57
+	jg 		.shift_back
+	sub 	dl, 48		; conv to ascii repr
 
-; 	; Otherwise...
-; 	sub		bl, 48			; convert current char to an int digit
-; 	add		rdi, rsi		; add this to our sum
-; 	mov		rsi, 10
-; 	mul		rsi				; rdi * rsi : to get place value
-; 	inc		rdx
-; 	jmp		.convertloop
+	; Shift place value
+	add 	eax, edx
+	mov 	esi, 10
+	mul 	esi
 
-; .finish:
-; 	cmp		rdx, 0			; not an int
-; 	jz		.restore
+	inc 	ecx
+	jmp 	.loop
 
-; 	mov		rsi, 10
-; 	div		rsi				; rax / rsi : undo extra place value shift
+.shift_back:
+	cmp 	ecx, 0
+	je 		.restore  	; an integer was not passed
+	div 	esi			; undo extra place value shift
 
-; .restore:
-; 	ret
+.restore:
+	pop 	rcx
+	pop 	rdx
+	ret
 
 ;---------------------------------------	
-; int strlen(string str)
+; i64 strlen(char* str)
 ; Calculates the length of a string
 ; returns the length in register rdi
 strlen:
-	mov		rax, rdi		; let rdi & rax point to the string
-	
-.nextchar:
-	cmp 	byte [rax], 0 	; compare the byte pointed to by 'rdi' against 
-							; zero (end of string)
-	jz		.finish			; exit this loop if was zero
-	inc		rax				; increment the pointer
-	jmp		.nextchar		; repeat
+	push 	rdi
+	push 	rcx
+	xor 	al, al
+	mov		rcx, -1
 
-.finish:
-	sub		rax, rdi		; subtract ending pointer from the starting pointer
-							; rax now contains the length of the string
-.restore:
+    ; while (*rdi != '\0') rcx--;
+	repnz 	scasb ; the real 'magic'
+	not 	rcx
+	mov		rax, rcx
+
+	pop 	rcx
+	pop 	rdi
 	ret
+
+;---------------------------------------	
+; i64 strlen(char* str)
+; Calculates the length of a string
+; returns the length in register rdi
+; normal impl
+; strlen:
+; 	mov		rax, rdi		; let rdi & rax point to the string
+	
+; .nextchar:
+; 	cmp 	byte [rax], 0 	; compare the byte pointed to by 'rdi' against 
+; 							; zero (end of string)
+; 	jz		.finish			; exit this loop if was zero
+; 	inc		rax				; increment the pointer
+; 	jmp		.nextchar		; repeat
+
+; .finish:
+; 	sub		rax, rdi		; subtract ending pointer from the starting pointer
+; 							; rax now contains the length of the string
+; .restore:
+; 	ret

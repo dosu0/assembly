@@ -11,7 +11,7 @@
     - [x64](#x64)
 
 ## About
-This repository contains miscallaneous programs written in assembly that can be
+This repository contains miscellaneous programs written in assembly that can be
 assembled using [nasm](https://nasm.us).
 
 ### Directory Structure
@@ -33,8 +33,8 @@ assembled using [nasm](https://nasm.us).
       1. On **macOS** using [**Homebrew 🍺**](https://brew.sh): `brew install nasm`
       2. On **Debian** based systems using **apt-get**: `sudo apt-get install nasm`
 3. GCC Compiler tools (for `make` and `ld`)
-   1. On macOS, install [Xcode](https://developer.apple.com/xcode/) or 'the command line tools'
-   2. On Linux install gcc
+   1. On macOS, install [Xcode](https://developer.apple.com/xcode/) or 'the command line tools'.
+   2. On Linux install gcc.
       1. Debian based systems: `sudo apt-get install gcc`
 
 4. Finally, to assemble and link the programs, run `./build.sh`
@@ -45,7 +45,7 @@ machine's architecture).
 
 ## Resources
 The resources and tutorials I used to learn assembly.
-Theres so much
+There's so much
 
 [Nasm Documentation](https://www.nasm.us/xdoc/2.15.05/html/nasmdoc0.html)
 
@@ -58,3 +58,4 @@ Theres so much
 - https://www.cs.uaf.edu/2017/fall/cs301/reference/x86_64.html
 - https://www.cs.tufts.edu/comp/40/docs/x64_cheatsheet.pdf
 - https://www.cs.tufts.edu/comp/40/docs/asm64-handout.pdf
+- https://www.felixcloutier.com/x86/

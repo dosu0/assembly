@@ -4,18 +4,45 @@
 
 ; %include 'io.asm'
 
+default rel
+
 %include 'io.asm'
 
 section .data
-msg		db 	'The 10000th prime number is ', 0
+begin_text:	
+	db "Generating prime #"
+	db 0
+usage: 	
+	db "Usage: prime <n>"
+	db 0
 
 section .text
 global 	_start
 
 _start:
-	; mov     rcx, 0          ; candidate
-	; mov     rbx, 0          ; prime numbers found
-	; mov	 rdx, 0			; answer
+	pop		rcx
+	cmp		ecx, 2
+	jne		.usage
 
-	mov		rdi, 0
+	pop 	rdi
+	pop 	rdi
+	call 	atoi
+	push	rax
+	
+	lea 	rdi, [begin_text]
+	call 	print
+
+	pop 	rdi
+	call 	iprintln
+
+	jmp	 	.exit
+
+.usage:
+	lea 	rdi, [usage]
+	call 	println
+	mov		edi, 1 ; unsuccessful
+	call	exit
+
+.exit:
+	xor 	edi, edi
 	call	exit

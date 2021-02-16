@@ -34,7 +34,7 @@ if ! [ $(command -v make) ]; then
     while true; do
         read -p "Do you wish to install gcc (for make and ld)" yn
         case $yn in
-            [Yy]* ) $INSTALL; break;;
+            [Yy]* ) $INSTALL gcc; break;;
             [Nn]* ) echo $FATAL make is required exit;;
             * ) echo "Please answer yes or no.";;
         esac

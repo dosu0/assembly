@@ -29,7 +29,7 @@ else
 endif
 
 
-PROGRAMS = args input count
+PROGRAMS = args input count prime hello
 OBJECTS = $(addsuffix .o,$(PROGRAMS)) 
 
 NASMFLAGS += -g
@@ -38,7 +38,7 @@ NASMFLAGS += -g
 all : $(PROGRAMS)
 
 % : $(SRC)/%.o
-	$(LD) $(LDFLAGS) $< -o bin/$@
+	$(LD)  $< $(LDFLAGS) -o bin/$@
 
 %.o : %.asm
 	$(NASM) $(NASMFLAGS) -o $@ -MD $<.dep $<

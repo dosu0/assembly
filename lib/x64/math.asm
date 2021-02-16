@@ -1,10 +1,10 @@
 ;-----------------------------------
-; include/x64/math.asm
+; lib/x64/math.asm
 ; Math functions & constants
 
 isqrt:
 
 .loop:
-    mov     rax, rdi
-    mov     rcx, 100
-    idiv    rcx         ; rax / rcx
+	mov     rax, rdi
+	mov     rcx, 100
+	idiv    rcx         ; rax / rcx

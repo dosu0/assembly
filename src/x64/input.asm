@@ -1,6 +1,7 @@
 ;----------------------------------------------------------------------------
 ; src/x64/input.asm
-; Designed for 64bit macOS - prints "Hello, <your inputted name>"
+; Designed for 64bit macOS
+; prints "Hello, <your inputted name>"
 ;
 
 default rel
