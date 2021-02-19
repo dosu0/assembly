@@ -12,16 +12,15 @@
 
 ## About
 This repository contains miscellaneous programs written in assembly that can be
-assembled using [nasm](https://nasm.us).
+assembled using [nasm](https://nasm.us). By no means is my code efficient or
+follow reccomended practices.
 
 ### Directory Structure
 - `bin/`: Where the assembled and linked programs will be emitted.
 - `lib/`: Utility functions
   - `x64/`: In Linux 64bit calling convention
-  - `x86/`: In Linux 32bit calling convention
 - `src/`: The actual source files for the programs
   - `x64/`: In Linux 64bit calling convention
-  - `x86/`: In Linux 32bit calling convention
 
 ## Assembling
 1. First of all, you need a **Linux box or a Mac** to run these programs
@@ -45,7 +44,6 @@ machine's architecture).
 
 ## Resources
 The resources and tutorials I used to learn assembly.
-There's so much
 
 [Nasm Documentation](https://www.nasm.us/xdoc/2.15.05/html/nasmdoc0.html)
 
