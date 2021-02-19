@@ -10,6 +10,8 @@
 atoi:
 	push 	rcx
 	push 	rdx
+	push 	rsi
+
 	xor		ecx, ecx
 	xor 	eax, eax 	; sum
 
@@ -37,8 +39,9 @@ atoi:
 	div 	esi			; undo extra place value shift
 
 .restore:
-	pop 	rcx
+	pop 	rsi
 	pop 	rdx
+	pop 	rcx
 	ret
 
 ;---------------------------------------	
@@ -46,37 +49,17 @@ atoi:
 ; Calculates the length of a string
 ; returns the length in register rdi
 strlen:
-	push 	rdi
 	push 	rcx
-	xor 	al, al
-	mov		rcx, -1
+	push 	rdi 		; apparently rdi is modified?
 
-    ; while (*rdi != '\0') rcx--;
-	repnz 	scasb ; the real 'magic'
-	not 	rcx
-	mov		rax, rcx
+	xor 	al, al 		; let al = 0
+	mov		rcx, -1 	; let rcx = 111111...
 
-	pop 	rcx
-	pop 	rdi
-	ret
+	repnz 	scasb 		; while (deref(rdi) != al and rcx != 0) rcx--;
 
-;---------------------------------------	
-; i64 strlen(char* str)
-; Calculates the length of a string
-; returns the length in register rdi
-; normal impl
-; strlen:
-; 	mov		rax, rdi		; let rdi & rax point to the string
-	
-; .nextchar:
-; 	cmp 	byte [rax], 0 	; compare the byte pointed to by 'rdi' against 
-; 							; zero (end of string)
-; 	jz		.finish			; exit this loop if was zero
-; 	inc		rax				; increment the pointer
-; 	jmp		.nextchar		; repeat
-
-; .finish:
-; 	sub		rax, rdi		; subtract ending pointer from the starting pointer
-; 							; rax now contains the length of the string
-; .restore:
-; 	ret
+	not 	rcx			; 111...11100 -> 000...00011 (repnz counts down)
+	mov		rax, rcx	; return rcx
+	.restore:
+		pop 	rdi
+		pop 	rcx
+		ret

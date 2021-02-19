@@ -59,3 +59,4 @@ Floats are passed from registers **xmm0-xmm7**
    ```
    (apparently its more efficient)
    See [this](https://stackoverflow.com/a/33668295/14551128) StackOverflow answer.
+3. `syscall` overrides **rcx**

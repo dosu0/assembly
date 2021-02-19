@@ -1,28 +1,27 @@
 ;----------------------------------------------------------------------------
-; src/x64/input.asm
+; src/input.asm
 ; Designed for 64bit macOS
-; prints "Hello, <your inputted name>"
+; Prompts for your name and then prints "Hello, <your inputted name>"
 ;
+
+%include "io.asm"
+
+global	_start
 
 default rel
 
-%define stdin 0
-
-%include 'io.asm'
-
 section .data
-msg1	db	'Please enter your name: ', 0
-msg2	db	'Hello, ', 0
+	prompt:	db	"Please enter your name: ", 0
+	msg2:	db	"Hello, ", 0
 
 section	.bss
-input	resb	255
+	input:	resb	255
 
 section .text
-global	_start
 
 _start:
-	; print(&msg1)
-	lea		rdi, [msg1]
+	; print(&prompt)
+	lea		rdi, [prompt]
 	call	print
 
 	; read(stdin, &input, 255)
@@ -39,10 +38,8 @@ _start:
 	; print(&input)
 	lea		rdi, [input]
 	call	print
-	
-	; exit(0)
-	xor		rdi, rdi
-	call	exit
 
-
-
+	.exit:
+		; exit(0)
+		xor		rdi, rdi
+		call	exit

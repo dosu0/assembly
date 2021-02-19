@@ -59,3 +59,4 @@ There's so much
 - https://www.cs.tufts.edu/comp/40/docs/x64_cheatsheet.pdf
 - https://www.cs.tufts.edu/comp/40/docs/asm64-handout.pdf
 - https://www.felixcloutier.com/x86/
+- https://github.com/HJLebbink/asm-dude/wiki
