@@ -10,16 +10,14 @@ global	 _start
 section	 .text
 
 _start:
-	xor		ecx, ecx
+	xor		r8, r8
 
 	.nextnum:
-		inc 	ecx
-		mov 	edi, ecx
-		push	rcx
+		inc 	r8
+		mov 	rdi, r8
 		call 	iprintln
-		pop 	rcx
 		
-		cmp		ecx, 10 	; Count up to 10
+		cmp		r8, 10 		; Count up to 10
 		jl		.nextnum
 
 	.finish:

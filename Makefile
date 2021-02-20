@@ -1,5 +1,3 @@
-$(info $(ARCHFLAGS))
-
 OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 
@@ -8,7 +6,7 @@ LD=ld
 
 ifeq ($(OS),Darwin)
     NASM = nasm -fmacho64
-    LDFLAGS = -e _start -macos_version_min 0.0
+    LDFLAGS = -e _start -macos_version_min 10.7
 else
 	ifeq ($(OS),Linux)
         NASM = nasm -felf64 
@@ -16,7 +14,7 @@ else
 endif
 
 
-PROGRAMS = args input count prime hello
+PROGRAMS = args input count prime exec
 OBJECTS = $(addsuffix .o,$(PROGRAMS)) 
 
 NASMFLAGS += -g -Ilib

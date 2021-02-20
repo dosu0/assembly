@@ -12,8 +12,8 @@ global	_start
 default rel
 
 section .data
-	prompt:	db	"Please enter your name: ", 0
-	msg2:	db	"Hello, ", 0
+	prompt:		db	"Please enter your name: ", 0
+	response:	db	"Hello, ", 0
 
 section	.bss
 	input:	resb	255
@@ -26,14 +26,14 @@ _start:
 	call	print
 
 	; read(stdin, &input, 255)
-	mov		rdx, 255
-	lea		rsi, [input]
-	mov		rdi, stdin
 	mov		rax, sys_read
+	mov		rdi, stdin
+	lea		rsi, [input]
+	mov		rdx, 255
 	syscall
 	
 	; print(&msg2)
-	lea		rdi, [msg2]
+	lea		rdi, [response]
 	call	print
 	
 	; print(&input)
@@ -41,6 +41,5 @@ _start:
 	call	print
 
 	.exit:
-		; exit(0)
 		xor		rdi, rdi
 		call	exit

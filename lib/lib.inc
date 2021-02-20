@@ -30,9 +30,10 @@ exit_terminated	equ 130
 exec:
 	push 	rcx
 	mov 	eax, sys_execve
-	mov 	eax, eax
 	syscall
 	pop		rcx
+    ret
+
 ;------------------------------
 ; void exit(i8 code)
 ; Exit the program 
