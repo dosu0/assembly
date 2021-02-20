@@ -1,10 +1,12 @@
 ;-----------------------------------------------------------
-; src/x64/prime.asm
+; src/prime.asm
 ; Usage: prime <n>
-; Generates the <n>th prime number as well as all previous
+; Generates the <n>th prime number and all previous
 ; prime numbers
+; TODO: Create an output buffer
 
-%include "io.asm"
+%include "lib.inc"
+%include "io.inc"
 
 global 	_start
 
@@ -124,10 +126,9 @@ _start:
 		jnz 	.loop
 
 		inc 	r10 	; primes_found += 1
-		; if(primes_found >= max_primes)
+		; if(primes_found > max_primes)
 		cmp 	r10, r8
-		jge 	.exit
-
+		jg 		.exit
 		mov 	rdi, r9
 		call 	iprintln
 

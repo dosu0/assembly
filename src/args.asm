@@ -1,8 +1,9 @@
 ;--------------------------------------------------
-; src/x64/args.asm
+; src/args.asm
 ; Prints each command line argument on a new line
 
-%include "io.asm"
+%include "lib.inc"
+%include "io.inc"
 
 global _start
 

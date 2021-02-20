@@ -4,7 +4,8 @@
 ; Prompts for your name and then prints "Hello, <your inputted name>"
 ;
 
-%include "io.asm"
+%include "lib.inc"
+%include "io.inc"
 
 global	_start
 

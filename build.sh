@@ -4,14 +4,6 @@ if [ ! -d 'bin' ]; then
     mkdir bin
 fi
 
-if [ ! -d 'src/x64/.deps' ]; then
-    mkdir src/x64/.deps
-fi
-
-if [ ! -d 'src/x86/.deps' ]; then
-    mkdir src/x86/.deps
-fi
-
 # idk. maybe i should have a build script?
 if [ $(command -v tput) ]; then
     RED=`tput setaf 1`

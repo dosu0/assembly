@@ -2,7 +2,8 @@
 ; src/hello.asm
 ; Prints "Hello, World!" to stdout
 
-%include "io.asm"
+%include "lib.inc"
+%include "io.inc"
 
 global _start
 

@@ -1,19 +1,26 @@
-;----------------------------------------------------------------
+;----------------------------------------------------------
 ; Utility functions
-; lib/io.asm
-; iprint(i64 num)	Print an integer to stdout
-; iprintln(i64 num)	Print an integer to stdout with a new line
-; print(char ptr) 	Print a string to stdout
-; println(char ptr) Print a string to stdout with a new line
+; lib/io.inc
+; iprint(i64 num)	 Print an integer to stdout
+; iprintln(i64 num)	 Print an integer to stdout with a new
+; 					 line
+; print(char* str) 	 Print a string to stdout
+; println(char* str) Print a string to stdout with a new 
+; 					 line
 
-%include "syscalls.asm"
-%include "string.asm"
-%include "misc.asm"
 
+%ifndef IO_INC_
+%define IO_INC_
+
+%include "syscalls.inc"
+%include "string.inc"
+
+;------------------------------------------------
 ; Constants
-stdout equ 1
-stdin equ 3
-;--------------------------------------------------------
+stdout 	equ 1
+stdin 	equ 3
+
+;--------------------------------------
 ; void iprint(i64 num)
 ; Print an integer to stdout
 iprint:
@@ -28,8 +35,8 @@ iprint:
 	.divideloop:
 		inc		rcx
 
-		xor		rdx, rdx	; rdx has to be empty becasue rdx and rax are viewed as 
-							; joined (for idiv)
+		xor		rdx, rdx	; rdx has to be empty becasue rdx and rax are
+							; viewed as joined (for idiv)
 		mov		rsi, 10
 		idiv	rsi			; rax / 10
 		add		rdx, 48 	; Convert the remainder to an ascii character
@@ -55,9 +62,10 @@ iprint:
 		pop		rcx
 		ret
 
-;------------------------------------------
+;--------------------------------------
 ; void iprintln(i64 num)
-; Print a (64bit) integer to stdout with new line
+; Print a (64bit) integer to stdout with
+; new line
 iprintln:
 	push 	rdi
 	call 	iprint
@@ -73,7 +81,7 @@ iprintln:
 		pop 	rdi
 		ret
 
-;----------------------------
+;--------------------------------------
 ; void print(char* str)
 ; Write a message to stdout
 print:
@@ -99,9 +107,10 @@ print:
 		pop 	rax
 		ret
 
-;-----------------------------------------
+;--------------------------------------
 ; void println(char* str)
-; Write a message to stdout with a new line
+; Write a message to stdout with a new
+; line
 println:
 	push 	rdi
 	call	print
@@ -116,3 +125,6 @@ println:
 	.restore:
 		pop 	rdi
 		ret
+
+
+%endif

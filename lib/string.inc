@@ -1,8 +1,11 @@
 ;----------------------------------------------------------
-; lib/x64/string.asm
+; lib/string.inc
 ; String utility functions.
 ; strlen(char* str)	Find the length of a string.
 ; atoi(char* str)		Convert an ascii string to an integer.	
+
+%ifndef STRING_INC_
+%define STRING_INC_
 
 ;---------------------------------------
 ; int atoi(char* str)
@@ -63,3 +66,5 @@ strlen:
 		pop 	rdi
 		pop 	rcx
 		ret
+
+%endif

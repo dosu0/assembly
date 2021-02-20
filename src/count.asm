@@ -2,7 +2,8 @@
 ; src/count.asm
 ; Counts to 10
 
-%include "io.asm"
+%include "lib.inc"
+%include "io.inc"
 
 global	 _start
 
