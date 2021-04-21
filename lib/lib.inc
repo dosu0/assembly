@@ -17,11 +17,17 @@ exit_error		equ 1
 exit_terminated	equ 130
 
 
-;------------------------------------------------
+;------------------------------------------------------
 ; Functions/Methods
 ; void exec()           Execute an external program via 
 ;                       sys_execve
 ; void exit(i8 code)    Exit the program via sys_exit
+
+;-------------------------------------------------
+; void fork(void)
+fork:
+	mov 	rax, sys_fork
+	syscall
 
 ;--------------------------------------
 ; void exec(char* program_name, 

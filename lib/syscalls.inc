@@ -181,9 +181,7 @@
 ; macOS x64
 
 ; Generate the 'raw' syscall
-%define S(syscall_number) \
-			((2 << 24) | \
-			 (~(0xFF << 24) & (syscall_number)))
+%define S(n) ((2 << 24) | (~(0xff << 24) & (n)))
 
 %assign	sys_exit            S(1)
 %assign	sys_fork            S(2)

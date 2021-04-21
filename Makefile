@@ -1,33 +1,43 @@
-OS=$(shell uname -s)
-ARCH=$(shell uname -m)
+.SUFFIXES: .asm .inc .o
+vpath %.inc $(LIBDIR)
 
-LD=ld
-.SUFFIXES: .asm .o
+OS = $(shell uname -s)
+
+BINDIR = bin
+LIBDIR = lib
+DEPDIR = .deps
+
+LD = ld
+
+AS = nasm
+ASFLAGS = -g -I$(LIBDIR)/ -Wall -Werror
+
+VPATH = $(BINDIR)
 
 ifeq ($(OS),Darwin)
-    NASM = nasm -fmacho64
-    LDFLAGS = -e _start -macos_version_min 10.7
+#   SDKPATH = $(shell xcode-select -p)/SDKs/MacOSX.sdk/usr/lib
+   ASFLAGS += -f macho64
+   LDFLAGS = -e _start -macos_version_min 10.7.0 # -L$(SDKPATH) -lSystem
 else
-	ifeq ($(OS),Linux)
-        NASM = nasm -felf64 
-	endif
+ifeq ($(OS),Linux)
+    ASFLAGS += -f elf64
+endif
 endif
 
-
-PROGRAMS = args input count prime exec
-OBJECTS = $(addsuffix .o,$(PROGRAMS)) 
-
-NASMFLAGS += -g -Ilib
+SOURCES = $(notdir $(wildcard src/*.asm))
+PROGRAMS = $(basename $(SOURCES))
+OBJECTS = $(addsuffix .o,$(PROGRAMS))
+BINARIES = $(addprefix $(BINDIR)/, $(PROGRAMS))
 
 .PHONY: all
-all : $(PROGRAMS)
+all : $(BINARIES)
 
-% : src/%.o
-	$(LD)  $< $(LDFLAGS) -o bin/$@
+$(BINDIR)/% : %.o
+	mkdir -p $(BINDIR)
+	$(LD) $< $(LDFLAGS) -o $@
 
-%.o : %.asm
-	$(NASM) $(NASMFLAGS) -o $@ $<
+%.o : src/%.asm
+	$(AS) $(ASFLAGS) -o $@ $<
 
-.PHONY: clean
-clean :
-	rm -rf src/*.o $(PROGRAMS)
+clean:
+	rm -rf $(BINARIES) src/*.o

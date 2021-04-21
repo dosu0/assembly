@@ -10,20 +10,20 @@ global _start
 section .text
 
 _start:
-	pop 	rcx			; The first value on the stack is the amount of arguments
-						; passed in to the executable
-	.nextarg:
-		cmp		rcx, 0		; If there are no arguments remaining exit
-		jz		.finish
+    ; The first value on the stack is the amount of arguments
+    ; passed in to the executable
+    pop rcx
 
-		pop		rdi			; Get the next argument
-		push 	rcx
-		call	println		; and print it
-		pop 	rcx
+.nextarg:
+    cmp     rcx, 0      ; If there are no arguments remaining exit
+    jz      .finish
 
-		dec		rcx			; one less argument
-		jmp 	.nextarg	; repeat
+    pop     rdi         ; Get the next argument
+    call    println     ; and print it
+    
+    dec     rcx         ; one less arg
+    jmp     .nextarg    ; repeat
 
-	.finish:
-    	xor     rdi, rdi
-		call 	exit
+.finish:
+    xor     rdi, rdi
+    call    exit

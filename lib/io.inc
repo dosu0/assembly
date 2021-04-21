@@ -18,7 +18,7 @@
 ;------------------------------------------------
 ; Constants
 stdout 	equ 1
-stdin 	equ 3
+stdin 	equ 0
 
 ;--------------------------------------
 ; void iprint(i64 num)
@@ -67,8 +67,8 @@ iprint:
 ; Print a (64bit) integer to stdout with
 ; new line
 iprintln:
-	push 	rdi
-	call 	iprint
+    push    rdi
+    call 	iprint
 
 	; print(&"\n")
 	mov		edi, 10 	; new line char
@@ -92,12 +92,12 @@ print:
 	call	strlen
 
 	; write(stdout, str, strlen(str))
-	mov		edx, eax 		; message length arg	
-	mov 	rsi, rdi		; message pointer arg
+	mov		edx, eax 			; message length arg	
+	mov 	rsi, rdi			; message pointer arg
 	mov		edi, stdout 	; file pointer arg
 	mov		rax, sys_write
 	push 	rcx
-	syscall ; 'syscall` moves rip into rcx
+	syscall 				; 'syscall` moves rip into rcx
 	pop 	rcx
 
 	.restore:
@@ -112,8 +112,8 @@ print:
 ; Write a message to stdout with a new
 ; line
 println:
-	push 	rdi
-	call	print
+    push 	rdi
+    call	print
 
 	; print(&"\n")
 	mov		edi, 10 	; new line char
@@ -126,5 +126,21 @@ println:
 		pop 	rdi
 		ret
 
+;--------------------------------------------------------------
+; i64 open(char* filepath, int flags)
+; Open a file; returns the file descriptor
+;
+; flags:
+; OR these flags together to create combinations
+%assign O_RDONLY 0 << 1	; Open in read only mode
+%assign O_WRONLY 1  	; Open in write only mode
+%assign O_RDWR 2    	; Open in read and write mode
+
+open:
+	push 	rcx
+	mov 	rax, sys_open
+	syscall
+	pop 	rcx
+    ret
 
 %endif
