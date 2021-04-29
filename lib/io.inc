@@ -129,12 +129,6 @@ println:
 ;--------------------------------------------------------------
 ; i64 open(char* filepath, int flags)
 ; Open a file; returns the file descriptor
-;
-; flags:
-; OR these flags together to create combinations
-%assign O_RDONLY 0 << 1	; Open in read only mode
-%assign O_WRONLY 1  	; Open in write only mode
-%assign O_RDWR 2    	; Open in read and write mode
 
 open:
 	push 	rcx
@@ -142,5 +136,18 @@ open:
 	syscall
 	pop 	rcx
     ret
+
+O_RDONLY    equ 0x0000	; open for reading only
+O_WRONLY    equ 0x0001  ; open for writing only
+O_RDWR      equ 0x0002  ; open for reading and writing
+O_ACCMODE   equ 0x0003
+O_NONBLOCK  equ 0x0004  ; do not block on open or for data to become available
+O_SHLOCK    equ 0x0010  ; open with shared file lock 
+O_EXLOCK    equ 0x0020  ; open with exclusive file lock 
+O_ASYNC     equ 0x0040  ; signal pgrp when data ready 
+O_FSYNC     equ 0x0080  ; synchronous writes 
+O_CREAT     equ 0x0200  ; create if nonexistant
+O_TRUNC     equ 0x0400  ; truncate to zero length
+O_EXCL      equ 0x0800  ; error if already exists 
 
 %endif
